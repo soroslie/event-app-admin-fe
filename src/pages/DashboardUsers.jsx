@@ -1,8 +1,9 @@
 import React from 'react';
+import PageHeader from '../components/layout/PageHeader';
 
 function DashboardUsers() {
   return (
-    <div>DashboardUsers</div>
+    <PageHeader title="Manage User" />
   );
 }
 
