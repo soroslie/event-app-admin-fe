@@ -1,11 +1,21 @@
 import React from 'react';
 import PageHeader from '../components/PageHeader';
+import { useGetUsersQuery } from '../store/slices/apiSlice';
+import TableDashboard from '../components/table/TableDashboard';
+import { userTableHeader } from '../constants/tableHeader';
 
 function DashboardUsers() {
+  const {
+    data: userList,
+    error: errorUserList,
+    isLoading: loadingUserList,
+  } = useGetUsersQuery();
+  if (!loadingUserList) {
+    console.log(userList.data);
+  }
   return (
     <>
       <PageHeader title="Manage User" />
-
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <div className="flex justify-between items-center pb-4">
           <label htmlFor="table-search" className="sr-only">Search</label>
@@ -16,46 +26,13 @@ function DashboardUsers() {
             <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
           </div>
         </div>
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-            <tr>
-              <th scope="col" className="py-3 px-6">
-                Product name
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Color
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Category
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Price
-              </th>
-              <th scope="col" className="py-3 px-6">
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="bg-white border-b 0 hover:bg-gray-50 ">
-              <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                Apple MacBook Pro 17
-              </th>
-              <td className="py-4 px-6">
-                Sliver
-              </td>
-              <td className="py-4 px-6">
-                Laptop
-              </td>
-              <td className="py-4 px-6">
-                $2999
-              </td>
-              <td className="py-4 px-6">
-                <a href="/" className="font-medium text-blue-600 ">Edit</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {!loadingUserList && !errorUserList && (
+          <TableDashboard
+            tableHeaders={userTableHeader}
+            tableBody={userList.data}
+            isLoading={loadingUserList}
+          />
+        )}
       </div>
     </>
   );

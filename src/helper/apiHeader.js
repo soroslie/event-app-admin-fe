@@ -1,8 +1,10 @@
 import LocalStorageConstant from '../constants/local_storage';
 
-export default function setPrepareHeader(headers) {
+const setPrepareHeader = (headers, { getState }) => {
   const token = localStorage.getItem(LocalStorageConstant.tokenKey);
   headers.set('authorization', `Bearer ${token}`);
 
   return headers;
-}
+};
+
+export default setPrepareHeader;
