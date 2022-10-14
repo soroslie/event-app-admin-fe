@@ -19,6 +19,14 @@ export const apiSlice = createApi({
       providesTags: ['Users'],
       // invalidatesTags: (result, error, arg) => (!error ? ['Users'] : []),
     }),
+    getEvents: builder.query({
+      query: () => ({
+        url: '/event/list',
+        method: 'GET',
+      }),
+      providesTags: ['Event'],
+      // invalidatesTags: (result, error, arg) => (!error ? ['Users'] : []),
+    }),
     authLogin: builder.mutation({
       query: ({ email, password }) => ({
         headers: (headers) => setPrepareHeader(headers),
@@ -37,4 +45,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useAuthLoginMutation, useGetUsersQuery } = apiSlice;
+export const { useAuthLoginMutation, useGetUsersQuery, useGetEventsQuery } = apiSlice;

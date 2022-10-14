@@ -46,9 +46,11 @@ function TableDashboard({ tableHeaders, tableBody, isLoading }) {
         {tableBody.map((item) => (
           <tr className="bg-white border-b 0 hover:bg-gray-50 ">
             {Object.keys(item).map((key) => (
-              <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                {item[key]}
-              </th>
+              key !== 'id' && key !== 'deleted_at' ? (
+                <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                  {item[key]}
+                </th>
+              ) : null
             ))}
           </tr>
         ))}
