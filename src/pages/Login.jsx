@@ -16,14 +16,36 @@ function Login() {
   const [inputError, setInputError] = useState({
     emailError: '',
     passwordError: '',
+    formError: '',
   });
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+    console.log(input);
   };
 
   const onHandleLogin = (e) => {
     e.preventDefault();
+
+    setInputError({
+      ...inputError,
+      emailError: '',
+      passwordError: '',
+      formError: '',
+    });
+
+    if (!input.email) {
+      return setInputError({
+        ...inputError,
+        emailError: 'Please fill the email field',
+      });
+    }
+    if (!input.password) {
+      return setInputError({
+        ...inputError,
+        passwordError: 'Please fill the password field',
+      });
+    }
 
     setButtonLoading(true);
     login({
@@ -36,6 +58,17 @@ function Login() {
       })
       .catch((error) => {
         console.log(error);
+        if (error.data.error_message) {
+          setInputError({
+            ...inputError,
+            formError: error.data.error_message,
+          });
+        } else {
+          setInputError({
+            ...inputError,
+            formError: 'something went wrong',
+          });
+        }
         setButtonLoading(false);
       });
 
@@ -43,6 +76,7 @@ function Login() {
       ...inputError,
       emailError: '',
       passwordError: '',
+      formError: '',
     });
   };
 
@@ -57,9 +91,11 @@ function Login() {
             Event App Admin
           </h1>
           <form className="space-y-4 md:space-y-6" onSubmit={onHandleLogin}>
-            <InputAuth placeholder="Email" type="text" onChange={handleChange} name="email" error={inputError.emailError} />
-            <InputAuth placeholder="Pasword" type="password" onChange={handleChange} name="password" error={inputError.passwordError} />
+            <InputAuth placeholder="Email" type="text" onChange={handleChange} name="email" error={inputError.emailError} value={input.email} />
+            <InputAuth placeholder="Pasword" type="password" onChange={handleChange} name="password" error={inputError.passwordError} value={input.password} />
             <div className="my-3" />
+            <p className={`${inputError.formError ? 'visible' : 'invisible'} text-center mt-1 text-red-500`}>{!inputError.formError ? '-' : inputError.formError}</p>
+
             <PrimarryButton title="sign in" onClick={onHandleLogin} isLoading={buttonLoading} />
           </form>
         </div>

@@ -6,22 +6,17 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     mode: 'cors',
     baseUrl: APIConstatnt.baseUrl,
-    prepareHeaders: (headers) => {
-      headers.set('Access-Control-Allow-Origin', '*');
-      headers.set('Content-type', 'application/json; charset=UTF-8');
-      return headers;
-    },
+    prepareHeaders: (headers) => headers,
   }),
   tagTypes: ['Auth'],
   endpoints: (builder) => ({
     authLogin: builder.mutation({
-      query: ({
-        email, password,
-      }) => ({
+      query: ({ email, password }) => ({
         url: '/auth/login',
         method: 'POST',
         body: {
-          email, password,
+          email,
+          password,
         },
       }),
       invalidatesTags: (result, error, arg) => (!error ? ['Auth'] : []),
@@ -32,7 +27,4 @@ export const apiSlice = createApi({
   }),
 });
 
-export const {
-  useAuthLoginMutation,
-  useInvalidateBooksMutation,
-} = apiSlice;
+export const { useAuthLoginMutation, useInvalidateBooksMutation } = apiSlice;
