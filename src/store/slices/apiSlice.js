@@ -26,7 +26,7 @@ export const apiSlice = createApi({
     }),
     getEvent: builder.query({
       query: (id) => ({
-        url: '/event/single',
+        url: '/event',
         method: 'POST',
         body: {
           id,
@@ -36,7 +36,21 @@ export const apiSlice = createApi({
     }),
     getEvents: builder.query({
       query: () => ({
-        url: '/event/list',
+        url: '/events',
+        method: 'GET',
+      }),
+      providesTags: ['Event'],
+    }),
+    getEventStatus: builder.query({
+      query: () => ({
+        url: '/event/status_list',
+        method: 'GET',
+      }),
+      providesTags: ['Event'],
+    }),
+    getEventCategories: builder.query({
+      query: () => ({
+        url: '/event/category_list',
         method: 'GET',
       }),
       providesTags: ['Event'],
@@ -60,5 +74,11 @@ export const apiSlice = createApi({
 });
 
 export const {
-  useAuthLoginMutation, useGetUsersQuery, useGetEventsQuery, useGetEventQuery, useGetProfileQuery,
+  useAuthLoginMutation,
+  useGetUsersQuery,
+  useGetEventStatusQuery,
+  useGetEventCategoriesQuery,
+  useGetEventsQuery,
+  useGetEventQuery,
+  useGetProfileQuery,
 } = apiSlice;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Input({
+function TextArea({
   title,
   name,
   type,
@@ -20,14 +20,15 @@ function Input({
         {title}
       </label>
       {isLoading ? (
-        <div className="animate-pulse rounded-xl bg-slate-200 h-10 w-full mx-auto shadow-2xl flex items-center justify-center" />
+        <div className="animate-pulse rounded-xl bg-slate-200 h-24 w-full mx-auto shadow-2xl flex items-center justify-center" />
       ) : (
-        <input
+        <textarea
           id={name}
           type={type}
           value={value}
           onChange={onChange}
           placeholder={placholder}
+          rows="4"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:bg-white focus:border-orange-300 focus:outline-none w-full p-2.5 "
         />
       )}
@@ -42,4 +43,4 @@ function Input({
   );
 }
 
-export default Input;
+export default TextArea;

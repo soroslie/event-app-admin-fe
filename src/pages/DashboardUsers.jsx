@@ -10,9 +10,7 @@ function DashboardUsers() {
     error: errorUserList,
     isLoading: loadingUserList,
   } = useGetUsersQuery();
-  if (!loadingUserList) {
-    console.log(userList.data);
-  }
+
   return (
     <>
       <PageHeader title="Manage User" />
