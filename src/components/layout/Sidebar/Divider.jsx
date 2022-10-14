@@ -2,7 +2,7 @@ import React from 'react';
 
 function Divider() {
   return (
-    <hr className="my-4 min-w-full" />
+    <hr className="mt-2 mb-1 min-w-full" />
   );
 }
 

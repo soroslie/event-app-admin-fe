@@ -24,6 +24,16 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Profile'],
     }),
+    getEvent: builder.query({
+      query: (id) => ({
+        url: '/event/single',
+        method: 'POST',
+        body: {
+          id,
+        },
+      }),
+      providesTags: ['Event'],
+    }),
     getEvents: builder.query({
       query: () => ({
         url: '/event/list',
@@ -50,5 +60,5 @@ export const apiSlice = createApi({
 });
 
 export const {
-  useAuthLoginMutation, useGetUsersQuery, useGetEventsQuery, useGetProfileQuery,
+  useAuthLoginMutation, useGetUsersQuery, useGetEventsQuery, useGetEventQuery, useGetProfileQuery,
 } = apiSlice;

@@ -7,7 +7,7 @@ function DashboardLayout() {
   return (
     <>
       <Sidebar />
-      <div className="ml-64">
+      <div className="ml-40 md:ml-64">
         <div className="p-7">
           <Outlet />
         </div>

@@ -10,6 +10,7 @@ import DashboardEvents from './pages/DashboardEvents';
 import DashboardMerchandise from './pages/DashboardMerchandise';
 import DashboardUsers from './pages/DashboardUsers';
 import AuthLayout from './components/layout/AuthLayout';
+import EventDetail from './pages/EventDetail';
 
 function App() {
   return (
@@ -29,10 +30,11 @@ function App() {
           >
             <Route index element={<Home />} />
             <Route path="/event" element={<DashboardEvents />} />
+            <Route path="/event/:id" element={<EventDetail />} />
+
             <Route path="/merchandise" element={<DashboardMerchandise />} />
             <Route path="/users" element={<DashboardUsers />} />
             <Route path="/profile" element={<Profile />} />
-
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
