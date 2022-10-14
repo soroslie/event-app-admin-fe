@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import image from '../assets/login_logo.png';
 import InputAuth from '../components/inputs/InputAuth';
 import PrimarryButton from '../components/inputs/PrimaryButton';
+import LocalStorageConstant from '../constants/local_storage';
 import { useAuthLoginMutation } from '../store/slices/apiSlice';
 
 function Login() {
+  const navigate = useNavigate();
   const [buttonLoading, setButtonLoading] = useState(false);
   const [login] = useAuthLoginMutation();
 
@@ -55,9 +58,10 @@ function Login() {
       .unwrap()
       .then((data) => {
         setButtonLoading(false);
+        localStorage.setItem(LocalStorageConstant.tokenKey, data.data.id_token);
+        navigate('/');
       })
       .catch((error) => {
-        console.log(error);
         if (error.data.error_message) {
           setInputError({
             ...inputError,
