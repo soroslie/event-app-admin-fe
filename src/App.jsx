@@ -5,6 +5,7 @@ import PageNotFound from './pages/PageNotFound';
 import RequireAuth from './components/layout/RequireAuth';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import DashboardEvents from './pages/DashboardEvents';
 import DashboardMerchandise from './pages/DashboardMerchandise';
 import DashboardUsers from './pages/DashboardUsers';
@@ -30,6 +31,8 @@ function App() {
             <Route path="/event" element={<DashboardEvents />} />
             <Route path="/merchandise" element={<DashboardMerchandise />} />
             <Route path="/users" element={<DashboardUsers />} />
+            <Route path="/profile" element={<Profile />} />
+
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

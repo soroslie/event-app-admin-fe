@@ -6,16 +6,14 @@ import { eventTableHeader } from '../constants/tableHeader';
 
 function DashboardEvents() {
   const {
-    data: userList,
-    error: errorUserList,
-    isLoading: loadingUserList,
+    data: eventList,
+    error: errorEventList,
+    isLoading: loadingEventList,
   } = useGetEventsQuery();
-  if (!loadingUserList) {
-    console.log(userList.data);
-  }
+
   return (
     <>
-      <PageHeader title="Manage User" />
+      <PageHeader title="Manage Event" />
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         <div className="flex justify-between items-center pb-4">
           <label htmlFor="table-search" className="sr-only">Search</label>
@@ -26,11 +24,11 @@ function DashboardEvents() {
             <input type="text" id="table-search" className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
           </div>
         </div>
-        {!loadingUserList && !errorUserList && (
+        {!loadingEventList && !errorEventList && (
           <TableDashboard
             tableHeaders={eventTableHeader}
-            tableBody={userList.data}
-            isLoading={loadingUserList}
+            tableBody={eventList.data}
+            isLoading={loadingEventList}
           />
         )}
       </div>

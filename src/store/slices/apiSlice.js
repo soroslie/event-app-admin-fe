@@ -9,7 +9,6 @@ export const apiSlice = createApi({
     baseUrl: APIConstatnt.baseUrl,
     prepareHeaders: setPrepareHeader,
   }),
-  tagTypes: ['Auth'],
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => ({
@@ -17,7 +16,13 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
       providesTags: ['Users'],
-      // invalidatesTags: (result, error, arg) => (!error ? ['Users'] : []),
+    }),
+    getProfile: builder.query({
+      query: () => ({
+        url: '/user/profile',
+        method: 'GET',
+      }),
+      providesTags: ['Profile'],
     }),
     getEvents: builder.query({
       query: () => ({
@@ -25,7 +30,6 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
       providesTags: ['Event'],
-      // invalidatesTags: (result, error, arg) => (!error ? ['Users'] : []),
     }),
     authLogin: builder.mutation({
       query: ({ email, password }) => ({
@@ -45,4 +49,6 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useAuthLoginMutation, useGetUsersQuery, useGetEventsQuery } = apiSlice;
+export const {
+  useAuthLoginMutation, useGetUsersQuery, useGetEventsQuery, useGetProfileQuery,
+} = apiSlice;

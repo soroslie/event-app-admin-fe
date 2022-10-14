@@ -8,7 +8,7 @@ function SidebarItem({ path, title }) {
     <li className="rounded-lg mb-4">
       <NavLink
         to={path}
-        className={`${pathname === path ? 'sidebar-link-active' : ''} flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-3 rounded-lg`}
+        className={`${pathname === path ? 'sidebar-link-active' : ''} capitalize flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-2 hover:scale-105 hover:text-orange-500`}
       >
         {title}
       </NavLink>
