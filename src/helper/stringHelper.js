@@ -8,6 +8,10 @@ class StringHelper {
   static dateTimeNow() {
     return moment().format('YYYY-MM-DDTkk:mm');
   }
+
+  static replaceWithSpace(words, pattern) {
+    return words.replace(pattern, ' ');
+  }
 }
 
 export default StringHelper;

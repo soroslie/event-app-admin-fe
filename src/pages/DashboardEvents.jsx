@@ -25,15 +25,13 @@ function DashboardEvents() {
   return (
     <>
       <PageHeader title="Manage Event" />
-      {!loadingEventList && !errorEventList && (
-        <TableDashboard
-          tableHeaders={eventTableHeader}
-          tableBody={eventList.data}
-          isLoading={loadingEventList}
-          editHandler={onEditHandler}
-          addHandler={onAddHandler}
-        />
-      )}
+      <TableDashboard
+        tableHeaders={eventTableHeader}
+        tableBody={!loadingEventList && !errorEventList && eventList.data}
+        isLoading={loadingEventList}
+        editHandler={onEditHandler}
+        addHandler={onAddHandler}
+      />
     </>
   );
 }
