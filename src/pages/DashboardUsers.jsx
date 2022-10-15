@@ -15,6 +15,7 @@ function DashboardUsers() {
     <>
       <PageHeader title="Manage User" />
       <TableDashboard
+        title="user"
         tableHeaders={userTableHeader}
         tableBody={!loadingUserList && !errorUserList && userList.data}
         isLoading={loadingUserList}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import image from '../assets/login_logo.png';
+import image from '../assets/images/login_logo.png';
 import InputAuth from '../components/inputs/InputAuth';
 import PrimarryButton from '../components/inputs/PrimaryButton';
 import LocalStorageConstant from '../constants/local_storage';

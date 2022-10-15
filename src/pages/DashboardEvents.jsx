@@ -26,6 +26,7 @@ function DashboardEvents() {
     <>
       <PageHeader title="Manage Event" />
       <TableDashboard
+        title="event"
         tableHeaders={eventTableHeader}
         tableBody={!loadingEventList && !errorEventList && eventList.data}
         isLoading={loadingEventList}

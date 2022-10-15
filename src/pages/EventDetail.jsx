@@ -11,6 +11,8 @@ import TextArea from '../components/inputs/TextArea';
 import Select from '../components/inputs/Select';
 import PrimarryButton from '../components/inputs/PrimaryButton';
 import StringHelper from '../helper/stringHelper';
+import TableDashboard from '../components/table/TableDashboard';
+import { merchandiseTableHeader } from '../constants/tableHeader';
 
 function EventDetail() {
   const { id } = useParams();
@@ -64,6 +66,14 @@ function EventDetail() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const addMerchandise = () => {
+
+  };
+
+  const editMerchandise = () => {
+
   };
 
   return (
@@ -145,6 +155,14 @@ function EventDetail() {
         />
         <PrimarryButton onClick={handleSubmit} title="confirm" />
       </form>
+      <TableDashboard
+        title="event"
+        tableHeaders={merchandiseTableHeader}
+        tableBody={!eventIsLoading && !eventError && eventData.data.merchandises}
+        isLoading={eventIsLoading}
+        editHandler={editMerchandise}
+        addHandler={addMerchandise}
+      />
     </>
   );
 }

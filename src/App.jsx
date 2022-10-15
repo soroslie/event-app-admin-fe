@@ -35,6 +35,7 @@ function App() {
             <Route path="/merchandise" element={<DashboardMerchandise />} />
             <Route path="/users" element={<DashboardUsers />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/*" element={<PageNotFound />} />
           </Route>
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
