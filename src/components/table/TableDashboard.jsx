@@ -12,13 +12,8 @@ function TableDashboard({
   isLoading,
   editHandler,
   addHandler,
+  searchHandler,
 }) {
-  if (isLoading) {
-    return (
-      <TableSkeleton tableHeaders={tableHeaders} />
-    );
-  }
-
   return (
     <div>
       <div className="flex justify-between iems-center pb-4">
@@ -39,63 +34,76 @@ function TableDashboard({
             </svg>
           </div>
           <input
+            onChange={searchHandler}
             type="text"
             id="table-search"
-            className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search for items"
+            className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+            placeholder={`search for ${title} name..`}
           />
         </div>
         {addHandler && (
-        <div className="mr-4 mt-4">
-          <AddButton title={title} />
-        </div>
+          <div className="mr-4 mt-4">
+            <AddButton title={title} />
+          </div>
         )}
       </div>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
-            <tr>
-              {Object.keys(tableBody[0]).map((key) => (key !== 'id' && key !== 'deleted_at' ? (
-                <th
-                  scope="row"
-                  className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                >
-                  {StringHelper.replaceWithSpace(key, '_')}
-                </th>
-              ) : null))}
-              <th
-                scope="row"
-                className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-              >
-                Action
-              </th>
-              {/* {tableHeaders.map((item) => (
+        {!tableBody && (
+          <p className="text-center w-full text-xl uppercase py-20 bg-gray-50 text-orange-400">
+            No Data
+          </p>
+        )}
+        {isLoading && <TableSkeleton tableHeaders={tableHeaders} />}
+        {!isLoading && (
+          <table className="w-full text-sm text-left text-gray-500">
+            {tableBody && (
+              <>
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
+                  <tr>
+                    {Object.keys(tableBody[0]).map((key, index) => (key !== 'id' && key !== 'deleted_at' ? (
+                      <th
+                        scope="row"
+                        className="py-4 px-6 font-bold text-gray-900 whitespace-nowrap"
+                      >
+                        {StringHelper.replaceWithSpace(key, '_')}
+                      </th>
+                    ) : null))}
+                    <th
+                      scope="row"
+                      className="py-4 px-6 font-bold text-gray-900 whitespace-nowrap"
+                    >
+                      Action
+                    </th>
+                    {/* {tableHeaders.map((item) => (
               <th scope="col" className="py-3 px-6">
                 {item}
               </th>
             ))} */}
-            </tr>
-          </thead>
-          <tbody>
-            {tableBody.map((item) => (
-              <tr className="bg-white border-b 0 hover:bg-gray-50 ">
-                {Object.keys(item).map((key) => (key !== 'id' && key !== 'deleted_at' ? (
-                  <th
-                    scope="row"
-                    className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
-                  >
-                    {item[key]}
-                  </th>
-                ) : null))}
-                {editHandler && (
-                <th>
-                  <EditButton onClick={() => editHandler(item.id)} />
-                </th>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableBody.map((item) => (
+                    <tr className="bg-white border-b 0 hover:bg-gray-50 ">
+                      {Object.keys(item).map((key) => (key !== 'id' && key !== 'deleted_at' ? (
+                        <th
+                          scope="row"
+                          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+                        >
+                          {item[key]}
+                        </th>
+                      ) : null))}
+                      {editHandler && (
+                        <th>
+                          <EditButton onClick={() => editHandler(item.id)} />
+                        </th>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </>
+            )}
+          </table>
+        )}
       </div>
     </div>
   );

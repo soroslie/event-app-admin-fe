@@ -31,6 +31,7 @@ function Input({
           value={value}
           onChange={onChange}
           placeholder={placholder}
+          disabled={disabled}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:bg-white focus:border-orange-300 focus:outline-none w-full p-2.5 "
         />
       )}

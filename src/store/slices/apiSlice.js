@@ -35,8 +35,8 @@ export const apiSlice = createApi({
       providesTags: ['Event'],
     }),
     getEvents: builder.query({
-      query: () => ({
-        url: '/events',
+      query: ({ search }) => ({
+        url: `/events?search=${search}`,
         method: 'GET',
       }),
       providesTags: ['Event'],
@@ -78,7 +78,7 @@ export const {
   useGetUsersQuery,
   useGetEventStatusQuery,
   useGetEventCategoriesQuery,
-  useGetEventsQuery,
+  useLazyGetEventsQuery,
   useGetEventQuery,
   useGetProfileQuery,
 } = apiSlice;
