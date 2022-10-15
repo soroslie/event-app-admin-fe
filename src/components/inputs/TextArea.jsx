@@ -23,6 +23,7 @@ function TextArea({
         <div className="animate-pulse rounded-xl bg-slate-200 h-24 w-full mx-auto shadow-2xl flex items-center justify-center" />
       ) : (
         <textarea
+          name={name}
           id={name}
           type={type}
           value={value}

@@ -10,6 +10,7 @@ function Input({
   disabled,
   error,
   isLoading,
+  min,
 }) {
   return (
     <div className="my-1">
@@ -23,6 +24,8 @@ function Input({
         <div className="animate-pulse rounded-xl bg-slate-200 h-10 w-full mx-auto shadow-2xl flex items-center justify-center" />
       ) : (
         <input
+          min={min}
+          name={name}
           id={name}
           type={type}
           value={value}

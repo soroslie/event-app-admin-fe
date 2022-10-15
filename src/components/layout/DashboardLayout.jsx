@@ -8,7 +8,7 @@ function DashboardLayout() {
     <>
       <Sidebar />
       <div className="ml-40 md:ml-64">
-        <div className="p-7">
+        <div className="px-7 py-4">
           <Outlet />
         </div>
         <Footer />
