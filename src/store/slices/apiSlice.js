@@ -35,8 +35,10 @@ export const apiSlice = createApi({
       providesTags: ['Event'],
     }),
     getEvents: builder.query({
-      query: ({ search }) => ({
-        url: `/events?search=${search}`,
+      query: ({
+        search, limit, sort, sortBy,
+      }) => ({
+        url: `/events?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
         method: 'GET',
       }),
       providesTags: ['Event'],

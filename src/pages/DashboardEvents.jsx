@@ -10,7 +10,8 @@ function DashboardEvents() {
   const [query, setQuery] = useState({
     search: '',
     sort: 'ASC',
-    sortBy: 'id',
+    sortBy: 'name',
+    limit: 10,
   });
   const [event, setEvent] = useState({
     data: [],
@@ -20,7 +21,9 @@ function DashboardEvents() {
 
   const [getData, { isFetching }] = useLazyGetEventsQuery();
   useEffect(() => {
-    getData({ search: query.search }).unwrap()
+    getData({
+      search: query.search, limit: query.limit, sort: query.sort, sortBy: query.sortBy,
+    }).unwrap()
       .then((item) => {
         setEvent({
           data: item,
@@ -34,10 +37,22 @@ function DashboardEvents() {
           error,
         });
       });
-  }, [query.search]);
+  }, [query]);
+
+  const onSortHandler = (e) => {
+    if (e.target.name === 'limit') {
+      setQuery({ ...query, limit: e.target.value });
+    }
+    if (e.target.name === 'sort') {
+      setQuery({ ...query, sort: e.target.value });
+    }
+    if (e.target.name === 'sortBy') {
+      setQuery({ ...query, sortBy: e.target.value });
+    }
+  };
 
   const onSearchHandler = (e) => {
-    setQuery({ search: e.target.value });
+    setQuery({ ...query, search: e.target.value });
   };
 
   const onEditHandler = (id) => {
@@ -59,6 +74,7 @@ function DashboardEvents() {
         editHandler={onEditHandler}
         addHandler={onAddHandler}
         searchHandler={onSearchHandler}
+        onSortHandler={onSortHandler}
       />
     </>
   );

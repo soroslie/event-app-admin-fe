@@ -4,20 +4,28 @@ import StringHelper from '../../helper/stringHelper';
 import TableSkeleton from '../skeletons/TableSkeleton';
 import AddButton from './AddButton';
 import EditButton from './EditButton';
+import SelectEntriesTable from './SelectEntries';
+import { selectEventSortBy, selectShowLimit, selectSort } from '../../constants/selectData';
 
 function TableDashboard({
   title,
+  // table
   tableHeaders,
   tableBody,
+  // state
   isLoading,
+  // function - input
   editHandler,
   addHandler,
   searchHandler,
+
+  // select - input
+  onSortHandler,
 }) {
   return (
     <div>
-      <div className="flex justify-between iems-center pb-4">
-        <div className="relative mt-4 ml-4">
+      <div className="lg:flex lg:justify-between items-center pb-4">
+        <div className="relative mt-4 lg:ml-4">
           <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg
               className="w-5 h-5 text-gray-500"
@@ -37,7 +45,7 @@ function TableDashboard({
             onChange={searchHandler}
             type="text"
             id="table-search"
-            className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+            className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500"
             placeholder={`search for ${title} name..`}
           />
         </div>
@@ -47,14 +55,25 @@ function TableDashboard({
           </div>
         )}
       </div>
+      <div className="lg:flex mb-3 lg:justify-between">
+        <div className="flex flex-row align-middle items-center ">
+          <div className="mr-2">Show</div>
+          <SelectEntriesTable onChange={onSortHandler} data={selectShowLimit} name="limit" />
+          <p className="ml-2">Entries</p>
+        </div>
+        <div className="flex flex-row align-middle items-center content-center">
+          <div className="mr-2">Sort By</div>
+          <SelectEntriesTable data={selectEventSortBy} onChange={onSortHandler} name="sortBy" />
+          <SelectEntriesTable data={selectSort} onChange={onSortHandler} name="sort" />
+        </div>
+      </div>
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         {!tableBody && (
           <p className="text-center w-full text-xl uppercase py-20 bg-gray-50 text-orange-400">
             No Data
           </p>
         )}
-        {isLoading && <TableSkeleton tableHeaders={tableHeaders} />}
-        {!isLoading && (
+        {isLoading ? <TableSkeleton tableHeaders={tableHeaders} /> : (
           <table className="w-full text-sm text-left text-gray-500">
             {tableBody && (
               <>
