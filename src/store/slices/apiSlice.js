@@ -57,6 +57,15 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Event'],
     }),
+    getMerchandises: builder.query({
+      query: ({
+        search, limit, sort, sortBy,
+      }) => ({
+        url: `/merchandise/list?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
+        method: 'GET',
+      }),
+      providesTags: ['Event'],
+    }),
     authLogin: builder.mutation({
       query: ({ email, password }) => ({
         headers: (headers) => setPrepareHeader(headers),
@@ -81,6 +90,7 @@ export const {
   useGetEventStatusQuery,
   useGetEventCategoriesQuery,
   useLazyGetEventsQuery,
+  useLazyGetMerchandisesQuery,
   useGetEventQuery,
   useGetProfileQuery,
 } = apiSlice;

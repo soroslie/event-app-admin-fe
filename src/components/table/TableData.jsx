@@ -5,9 +5,9 @@ import TableSkeleton from '../skeletons/TableSkeleton';
 import AddButton from './AddButton';
 import EditButton from './EditButton';
 import SelectEntriesTable from './SelectEntries';
-import { selectEventSortBy, selectShowLimit, selectSort } from '../../constants/selectData';
+import { selectShowLimit, selectSort } from '../../constants/selectData';
 
-function TableDashboard({
+function TableData({
   title,
   // table
   tableHeaders,
@@ -21,10 +21,12 @@ function TableDashboard({
 
   // select - input
   onSortHandler,
+  sortByData,
 }) {
   return (
     <div>
       <div className="lg:flex lg:justify-between items-center pb-4">
+        {searchHandler && (
         <div className="relative mt-4 lg:ml-4">
           <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
             <svg
@@ -49,12 +51,14 @@ function TableDashboard({
             placeholder={`search for ${title} name..`}
           />
         </div>
+        )}
         {addHandler && (
           <div className="mr-4 mt-4">
             <AddButton title={title} />
           </div>
         )}
       </div>
+      {onSortHandler && (
       <div className="lg:flex mb-3 lg:justify-between">
         <div className="flex flex-row align-middle items-center ">
           <div className="mr-2">Show</div>
@@ -63,10 +67,11 @@ function TableDashboard({
         </div>
         <div className="flex flex-row align-middle items-center content-center">
           <div className="mr-2">Sort By</div>
-          <SelectEntriesTable data={selectEventSortBy} onChange={onSortHandler} name="sortBy" />
+          <SelectEntriesTable data={sortByData} onChange={onSortHandler} name="sortBy" />
           <SelectEntriesTable data={selectSort} onChange={onSortHandler} name="sort" />
         </div>
       </div>
+      )}
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
         {!tableBody && (
           <p className="text-center w-full text-xl uppercase py-20 bg-gray-50 text-orange-400">
@@ -128,4 +133,4 @@ function TableDashboard({
   );
 }
 
-export default TableDashboard;
+export default TableData;

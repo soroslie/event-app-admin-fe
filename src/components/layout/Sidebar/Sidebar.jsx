@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import LocalStorageConstant from '../../constants/local_storage';
-import SidebarItem from './Sidebar/SidebarItem';
-import SideBarButton from './Sidebar/SideBarButton';
-import Divider from './Sidebar/Divider';
+import LocalStorageConstant from '../../../constants/local_storage';
+import SidebarItem from './SidebarItem';
+import SideBarButton from './SideBarButton';
+import Divider from './Divider';
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -22,6 +22,9 @@ export default function Sidebar() {
             <SidebarItem path="/users" title="user" />
           </ul>
           <hr className="mx-2 min-w-full" />
+          <ul className="flex-col min-w-full flex list-none">
+            <SidebarItem path="/merchandise" title="merchandise" />
+          </ul>
           <ul className="flex-col min-w-full flex list-none absolute bottom-0">
             <Divider />
             <SidebarItem path="/profile" title="profile" />

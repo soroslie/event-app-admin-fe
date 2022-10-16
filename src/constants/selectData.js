@@ -9,5 +9,12 @@ export const selectEventSortBy = [
   { value: 'ticket_price', name: 'ticket price' },
   { value: 'category_name', name: 'category name' },
   { value: 'status_name', name: 'status' },
+];
+
+export const selectMerchandiseSortBy = [
+  { value: 'merchandises.name', name: 'name' },
+  { value: 'stock', name: 'stock' },
+  { value: 'price', name: 'price' },
+  { value: 'events.name', name: 'event name' },
 
 ];

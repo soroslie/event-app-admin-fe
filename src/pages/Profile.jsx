@@ -1,15 +1,14 @@
 import React from 'react';
-import PageHeader from '../components/PageHeader';
 import PrimarryButton from '../components/inputs/PrimaryButton';
 import { useGetProfileQuery } from '../store/slices/apiSlice';
 import ProfileSkeleton from '../components/skeletons/ProfileSkeleton';
+import DashBoardContent from '../components/layout/DashBoardContent';
 
 function Profile() {
   const { data, error, isLoading } = useGetProfileQuery();
 
   return (
-    <>
-      <PageHeader title="Profile" />
+    <DashBoardContent title="Profile">
       {!error && isLoading && <ProfileSkeleton />}
       {!error && !isLoading && (
       <div className="p-8 bg-white shadow-xl mt-4 max-w-xl mx-auto">
@@ -45,7 +44,7 @@ function Profile() {
         </div>
       </div>
       )}
-    </>
+    </DashBoardContent>
   );
 }
 

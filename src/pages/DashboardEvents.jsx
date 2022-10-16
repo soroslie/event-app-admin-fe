@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
 import { useLazyGetEventsQuery } from '../store/slices/apiSlice';
-import TableDashboard from '../components/table/TableDashboard';
 import { eventTableHeader } from '../constants/tableHeader';
+import DashBoardContent from '../components/layout/DashBoardContent';
+import TableData from '../components/table/TableData';
+import { selectEventSortBy } from '../constants/selectData';
 
 function DashboardEvents() {
   const navigate = useNavigate();
@@ -64,9 +65,8 @@ function DashboardEvents() {
   };
 
   return (
-    <>
-      <PageHeader title="Manage Event" />
-      <TableDashboard
+    <DashBoardContent title="Manage Event">
+      <TableData
         title="event"
         tableHeaders={eventTableHeader}
         tableBody={!event.isLoading && !event.error && event.data.data}
@@ -75,8 +75,9 @@ function DashboardEvents() {
         addHandler={onAddHandler}
         searchHandler={onSearchHandler}
         onSortHandler={onSortHandler}
+        sortByData={selectEventSortBy}
       />
-    </>
+    </DashBoardContent>
   );
 }
 

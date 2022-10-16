@@ -11,8 +11,8 @@ import TextArea from '../components/inputs/TextArea';
 import Select from '../components/inputs/Select';
 import PrimarryButton from '../components/inputs/PrimaryButton';
 import StringHelper from '../helper/stringHelper';
-import TableDashboard from '../components/table/TableDashboard';
 import { merchandiseTableHeader } from '../constants/tableHeader';
+import TableData from '../components/table/TableData';
 
 function EventDetail() {
   const { id } = useParams();
@@ -155,8 +155,8 @@ function EventDetail() {
         />
         <PrimarryButton onClick={handleSubmit} title="confirm" />
       </form>
-      <TableDashboard
-        title="event"
+      <TableData
+        title="merchandise"
         tableHeaders={merchandiseTableHeader}
         tableBody={!eventIsLoading && !eventError && eventData.data.merchandises}
         isLoading={eventIsLoading}

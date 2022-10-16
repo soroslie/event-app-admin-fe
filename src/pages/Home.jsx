@@ -1,13 +1,11 @@
 import React from 'react';
-import PageHeader from '../components/PageHeader';
+import DashBoardContent from '../components/layout/DashBoardContent';
 
 function Home() {
   return (
-    <>
-      <PageHeader title="Home" />
+    <DashBoardContent title="Home">
       <div>a</div>
-    </>
-
+    </DashBoardContent>
   );
 }
 

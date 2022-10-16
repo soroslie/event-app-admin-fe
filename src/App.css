@@ -3,6 +3,12 @@
     color: rgb(234 88 12);
 }
 
+/* DASHBOARD */
+
+.dashboard-content{
+    min-height: 100VH;
+}
+
 /* TOOLTIP */
 .tooltip {
     position: relative;
