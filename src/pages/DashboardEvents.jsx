@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLazyGetEventsQuery } from '../store/slices/apiSlice';
+import { useGetEventsQuery } from '../store/slices/apiSlice';
 import { eventTableHeader } from '../constants/tableHeader';
 import DashBoardContent from '../components/layout/DashBoardContent';
 import TableData from '../components/table/TableData';
@@ -14,31 +14,16 @@ function DashboardEvents() {
     sortBy: 'name',
     limit: 10,
   });
-  const [event, setEvent] = useState({
-    data: [],
-    error: '',
-    isLoading: true,
+
+  const {
+    data: event,
+    error: errorEvent,
+    isFetching: loadingEvent,
+  } = useGetEventsQuery({
+    search: query.search, limit: query.limit, sort: query.sort, sortBy: query.sortBy,
   });
 
-  const [getData, { isFetching }] = useLazyGetEventsQuery();
-  useEffect(() => {
-    getData({
-      search: query.search, limit: query.limit, sort: query.sort, sortBy: query.sortBy,
-    }).unwrap()
-      .then((item) => {
-        setEvent({
-          data: item,
-          isLoading: false,
-          error: '',
-        });
-      }).catch((error) => {
-        setEvent({
-          data: [],
-          isLoading: false,
-          error,
-        });
-      });
-  }, [query]);
+  console.log(loadingEvent);
 
   const onSortHandler = (e) => {
     if (e.target.name === 'limit') {
@@ -69,11 +54,13 @@ function DashboardEvents() {
       <TableData
         title="event"
         tableHeaders={eventTableHeader}
-        tableBody={!event.isLoading && !event.error && event.data.data}
-        isLoading={isFetching}
+        tableBody={!loadingEvent && !errorEvent && event.data}
+        isLoading={loadingEvent}
+        isError={errorEvent}
         editHandler={onEditHandler}
         addHandler={onAddHandler}
         searchHandler={onSearchHandler}
+        searchAbleData="event name"
         onSortHandler={onSortHandler}
         sortByData={selectEventSortBy}
       />

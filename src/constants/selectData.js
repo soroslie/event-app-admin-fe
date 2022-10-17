@@ -25,3 +25,8 @@ export const selectMerchandiseSortBy = [
   { value: 'price', name: 'price' },
   { value: 'events.name', name: 'event name' },
 ];
+
+export const selectUserSortBy = [
+  { value: 'email', name: 'membership type' },
+  { value: 'memberships.name', name: 'membership type' },
+];

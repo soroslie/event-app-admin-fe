@@ -5,7 +5,7 @@ import ProfileSkeleton from '../components/skeletons/ProfileSkeleton';
 import DashBoardContent from '../components/layout/DashBoardContent';
 
 function Profile() {
-  const { data, error, isLoading } = useGetProfileQuery();
+  const { data, error, isFetching: isLoading } = useGetProfileQuery();
 
   return (
     <DashBoardContent title="Profile">

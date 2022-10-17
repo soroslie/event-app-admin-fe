@@ -9,11 +9,13 @@ import { selectShowLimit, selectSort } from '../../constants/selectData';
 
 function TableData({
   title,
+  searchAbleData,
   // table
   tableHeaders,
   tableBody,
   // state
   isLoading,
+  isError,
   // function - input
   editHandler,
   addHandler,
@@ -48,7 +50,7 @@ function TableData({
             type="text"
             id="table-search"
             className="p-2 pl-10 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500"
-            placeholder={`search for ${title} name..`}
+            placeholder={`search for ${searchAbleData}`}
           />
         </div>
         )}
@@ -73,7 +75,7 @@ function TableData({
       </div>
       )}
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        {!tableBody && (
+        {!tableBody && !isLoading && (
           <p className="text-center w-full text-xl uppercase py-20 bg-gray-50 text-orange-400">
             No Data
           </p>
@@ -92,12 +94,14 @@ function TableData({
                         {StringHelper.replaceWithSpace(key, '_')}
                       </th>
                     ) : null))}
-                    <th
-                      scope="row"
-                      className="py-4 px-6 font-bold text-gray-900 whitespace-nowrap"
-                    >
-                      Action
-                    </th>
+                    {editHandler ? (
+                      <th
+                        scope="row"
+                        className="py-4 px-6 font-bold text-gray-900 whitespace-nowrap"
+                      >
+                        Action
+                      </th>
+                    ) : null}
                     {/* {tableHeaders.map((item) => (
               <th scope="col" className="py-3 px-6">
                 {item}
@@ -128,6 +132,7 @@ function TableData({
             )}
           </table>
         )}
+        {!isLoading && isError ? null : null}
       </div>
     </div>
   );

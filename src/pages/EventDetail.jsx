@@ -56,12 +56,12 @@ function EventDetail() {
   const {
     data: eventStatus,
     error: eventStatusError,
-    isLoading: eventStatusIsLoading,
+    isFetching: eventStatusIsLoading,
   } = useGetEventStatusQuery();
   const {
     data: eventCategory,
     error: eventCategoryError,
-    isLoading: eventCategoryIsLoading,
+    isFetching: eventCategoryIsLoading,
   } = useGetEventCategoriesQuery();
 
   const handleSubmit = (e) => {
@@ -160,8 +160,6 @@ function EventDetail() {
         tableHeaders={merchandiseTableHeader}
         tableBody={!eventIsLoading && !eventError && eventData.data.merchandises}
         isLoading={eventIsLoading}
-        editHandler={editMerchandise}
-        addHandler={addMerchandise}
       />
     </>
   );

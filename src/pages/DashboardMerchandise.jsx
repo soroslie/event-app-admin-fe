@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import DashBoardContent from '../components/layout/DashBoardContent';
 import MerchandiseModal from '../components/modal/merchandiseModal';
 import TableData from '../components/table/TableData';
 import { selectMerchandiseSortBy } from '../constants/selectData';
 import { merchandiseTableHeader } from '../constants/tableHeader';
-import { useLazyGetMerchandisesQuery } from '../store/slices/apiSlice';
+import { useGetMerchandisesQuery } from '../store/slices/apiSlice';
 
 function DashboardMerchandise() {
   const [query, setQuery] = useState({
@@ -13,13 +13,16 @@ function DashboardMerchandise() {
     sortBy: 'name',
     limit: 10,
   });
-  const [merchandise, setMerchandise] = useState({
-    data: [],
-    error: '',
-    isLoading: true,
-  });
 
-  const [getData, { isFetching }] = useLazyGetMerchandisesQuery();
+  const {
+    data: merchandise,
+    error: errorMerchandise,
+    isFetching: loadingMerchandise,
+  } = useGetMerchandisesQuery(
+    {
+      search: query.search, limit: query.limit, sort: query.sort, sortBy: query.sortBy,
+    },
+  );
 
   const [modalData, setModalData] = useState({
     show: false,
@@ -32,30 +35,6 @@ function DashboardMerchandise() {
       stock: 0,
     },
   });
-
-  useEffect(() => {
-    getData({
-      search: query.search,
-      limit: query.limit,
-      sort: query.sort,
-      sortBy: query.sortBy,
-    })
-      .unwrap()
-      .then((item) => {
-        setMerchandise({
-          data: item,
-          isLoading: false,
-          error: '',
-        });
-      })
-      .catch((error) => {
-        setMerchandise({
-          data: [],
-          isLoading: false,
-          error,
-        });
-      });
-  }, [query]);
 
   const onSortHandler = (e) => {
     if (e.target.name === 'limit') {
@@ -113,12 +92,13 @@ function DashboardMerchandise() {
         title="merchandise"
         tableHeaders={merchandiseTableHeader}
         tableBody={
-          !merchandise.isLoading && !merchandise.error && merchandise.data.data
+          !errorMerchandise && !loadingMerchandise && merchandise.data
         }
-        isLoading={isFetching}
+        isLoading={loadingMerchandise}
         editHandler={onEditHandler}
         addHandler={onAddHandler}
         searchHandler={onSearchHandler}
+        searchAbleData="merchandise name"
         onSortHandler={onSortHandler}
         sortByData={selectMerchandiseSortBy}
       />

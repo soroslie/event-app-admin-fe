@@ -12,11 +12,14 @@ export const apiSlice = createApi({
   tagTypes: ['Profile', 'Event', 'Merchandise'],
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => ({
-        url: '/user/list',
+      query: ({
+        search, limit, sort, sortBy,
+      }) => ({
+        url: `/user/list?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
         method: 'GET',
       }),
       providesTags: ['Users'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Users'] : []),
     }),
     getProfile: builder.query({
       query: () => ({
@@ -43,6 +46,7 @@ export const apiSlice = createApi({
         method: 'GET',
       }),
       providesTags: ['Event'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Event'] : []),
     }),
     getEventStatus: builder.query({
       query: () => ({
@@ -134,8 +138,8 @@ export const {
   useGetEventStatusQuery,
   useGetEventCategoriesQuery,
   useGetEventNameListQuery,
-  useLazyGetEventsQuery,
-  useLazyGetMerchandisesQuery,
+  useGetEventsQuery,
+  useGetMerchandisesQuery,
   usePostEditMerchandiseMutation,
   usePostCreateMerchandiseMutation,
   useGetEventQuery,
