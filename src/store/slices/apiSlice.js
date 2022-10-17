@@ -9,6 +9,7 @@ export const apiSlice = createApi({
     baseUrl: APIConstatnt.baseUrl,
     prepareHeaders: setPrepareHeader,
   }),
+  tagTypes: ['Profile', 'Event', 'Merchandise'],
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => ({
@@ -57,6 +58,13 @@ export const apiSlice = createApi({
       }),
       providesTags: ['Event'],
     }),
+    getEventNameList: builder.query({
+      query: () => ({
+        url: '/event/event_and_id_list',
+        method: 'GET',
+      }),
+      providesTags: ['Event'],
+    }),
     getMerchandises: builder.query({
       query: ({
         search, limit, sort, sortBy,
@@ -64,7 +72,43 @@ export const apiSlice = createApi({
         url: `/merchandise/list?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
         method: 'GET',
       }),
-      providesTags: ['Event'],
+      providesTags: ['Merchandise'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Merchandise'] : []),
+    }),
+    postEditMerchandise: builder.mutation({
+      query: ({
+        id, eventId, name, stock, price,
+      }) => ({
+        headers: (headers) => setPrepareHeader(headers),
+        url: '/event/merchandise',
+        method: 'PATCH',
+        body: {
+          id,
+          event_id: eventId,
+          name,
+          stock,
+          price,
+        },
+      }),
+      providesTags: ['Merchandise'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Merchandise'] : []),
+    }),
+    postCreateMerchandise: builder.mutation({
+      query: ({
+        eventId, name, stock, price,
+      }) => ({
+        headers: (headers) => setPrepareHeader(headers),
+        url: '/event/merchandise',
+        method: 'POST',
+        body: {
+          event_id: eventId,
+          name,
+          stock,
+          price,
+        },
+      }),
+      providesTags: ['Merchandise'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Merchandise'] : []),
     }),
     authLogin: builder.mutation({
       query: ({ email, password }) => ({
@@ -76,7 +120,7 @@ export const apiSlice = createApi({
           password,
         },
       }),
-      invalidatesTags: (result, error, arg) => (!error ? ['Auth'] : []),
+      // invalidatesTags: (result, error, arg) => (!error ? ['Auth'] : []),
     }),
     // invalidateBooks: builder.mutation({
     //   invalidatesTags: ['Auth'],
@@ -89,8 +133,11 @@ export const {
   useGetUsersQuery,
   useGetEventStatusQuery,
   useGetEventCategoriesQuery,
+  useGetEventNameListQuery,
   useLazyGetEventsQuery,
   useLazyGetMerchandisesQuery,
+  usePostEditMerchandiseMutation,
+  usePostCreateMerchandiseMutation,
   useGetEventQuery,
   useGetProfileQuery,
 } = apiSlice;

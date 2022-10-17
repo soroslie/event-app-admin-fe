@@ -12,6 +12,12 @@ function Input({
   isLoading,
   min,
 }) {
+  let className = ' w-full p-2.5 rounded-lg text-gray-900 text-sm ';
+  if (disabled) {
+    className += ' cursor-not-allowed bg-gray-200 border border-gray-300 font-bold';
+  } else {
+    className += ' bg-gray-50 border border-gray-300 focus:bg-white focus:border-orange-300 focus:outline-none';
+  }
   return (
     <div className="my-1">
       <label
@@ -32,7 +38,7 @@ function Input({
           onChange={onChange}
           placeholder={placholder}
           disabled={disabled}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:bg-white focus:border-orange-300 focus:outline-none w-full p-2.5 "
+          className={className}
         />
       )}
       <p

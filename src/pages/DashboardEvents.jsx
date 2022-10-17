@@ -56,8 +56,8 @@ function DashboardEvents() {
     setQuery({ ...query, search: e.target.value });
   };
 
-  const onEditHandler = (id) => {
-    navigate(`/event/${id}`);
+  const onEditHandler = (data) => {
+    navigate(`/event/${data.id}`);
   };
 
   const onAddHandler = () => {

@@ -36,3 +36,8 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+/* MODAL */
+.bg-backdrop{
+    background-color: hsla(0, 0%, 50%, 0.534);
+}

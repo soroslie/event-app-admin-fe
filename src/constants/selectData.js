@@ -1,6 +1,14 @@
-export const selectSort = [{ value: 'ASC', name: 'ASC' }, { value: 'DESC', name: 'DESC' }];
+export const selectSort = [
+  { value: 'ASC', name: 'ASC' },
+  { value: 'DESC', name: 'DESC' },
+];
 
-export const selectShowLimit = [{ value: 10, name: '10' }, { value: 25, name: '25' }, { value: 50, name: '50' }, { value: 100, name: '100' }];
+export const selectShowLimit = [
+  { value: 10, name: '10' },
+  { value: 25, name: '25' },
+  { value: 50, name: '50' },
+  { value: 100, name: '100' },
+];
 
 export const selectEventSortBy = [
   { value: 'events.name', name: 'name' },
@@ -16,5 +24,4 @@ export const selectMerchandiseSortBy = [
   { value: 'stock', name: 'stock' },
   { value: 'price', name: 'price' },
   { value: 'events.name', name: 'event name' },
-
 ];

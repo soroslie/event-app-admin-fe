@@ -1,38 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DashBoardContent from '../components/layout/DashBoardContent';
+import MerchandiseModal from '../components/modal/merchandiseModal';
 import TableData from '../components/table/TableData';
 import { selectMerchandiseSortBy } from '../constants/selectData';
 import { merchandiseTableHeader } from '../constants/tableHeader';
 import { useLazyGetMerchandisesQuery } from '../store/slices/apiSlice';
 
 function DashboardMerchandise() {
-  const navigate = useNavigate();
   const [query, setQuery] = useState({
     search: '',
     sort: 'ASC',
     sortBy: 'name',
     limit: 10,
   });
-  const [event, setEvent] = useState({
+  const [merchandise, setMerchandise] = useState({
     data: [],
     error: '',
     isLoading: true,
   });
 
   const [getData, { isFetching }] = useLazyGetMerchandisesQuery();
+
+  const [modalData, setModalData] = useState({
+    show: false,
+    data: {
+      id: '',
+      event_name: '',
+      event_id: '',
+      name: '',
+      price: 0,
+      stock: 0,
+    },
+  });
+
   useEffect(() => {
     getData({
-      search: query.search, limit: query.limit, sort: query.sort, sortBy: query.sortBy,
-    }).unwrap()
+      search: query.search,
+      limit: query.limit,
+      sort: query.sort,
+      sortBy: query.sortBy,
+    })
+      .unwrap()
       .then((item) => {
-        setEvent({
+        setMerchandise({
           data: item,
           isLoading: false,
           error: '',
         });
-      }).catch((error) => {
-        setEvent({
+      })
+      .catch((error) => {
+        setMerchandise({
           data: [],
           isLoading: false,
           error,
@@ -56,17 +73,48 @@ function DashboardMerchandise() {
     setQuery({ ...query, search: e.target.value });
   };
 
-  const onEditHandler = () => {
+  const onEditHandler = (data) => {
+    setModalData({
+      data: {
+        id: data.id,
+        event_name: data.event_name,
+        event_id: data.event_id,
+        name: data.name,
+        price: data.price,
+        stock: data.stock,
+      },
+      show: true,
+    });
+  };
+
+  const handleInputChange = (e) => {
+    setModalData({ ...modalData, data: { ...modalData.data, [e.target.name]: e.target.value } });
   };
 
   const onAddHandler = () => {
+    setModalData({ ...modalData, show: true });
   };
+
+  const onCloseModal = () => {
+    setModalData({ data: [], show: false });
+  };
+
   return (
     <DashBoardContent title="Manage Merchandise">
+      {modalData.show && (
+      <MerchandiseModal
+        onCloseModal={onCloseModal}
+        show={modalData.show}
+        data={modalData.data}
+        handleInputChange={handleInputChange}
+      />
+      )}
       <TableData
         title="merchandise"
         tableHeaders={merchandiseTableHeader}
-        tableBody={!event.isLoading && !event.error && event.data.data}
+        tableBody={
+          !merchandise.isLoading && !merchandise.error && merchandise.data.data
+        }
         isLoading={isFetching}
         editHandler={onEditHandler}
         addHandler={onAddHandler}

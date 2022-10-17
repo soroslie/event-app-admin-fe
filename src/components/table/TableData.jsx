@@ -47,14 +47,14 @@ function TableData({
             onChange={searchHandler}
             type="text"
             id="table-search"
-            className="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+            className="p-2 pl-10 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500"
             placeholder={`search for ${title} name..`}
           />
         </div>
         )}
         {addHandler && (
           <div className="mr-4 mt-4">
-            <AddButton title={title} />
+            <AddButton onClick={addHandler} title={title} />
           </div>
         )}
       </div>
@@ -84,10 +84,10 @@ function TableData({
               <>
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
-                    {Object.keys(tableBody[0]).map((key, index) => (key !== 'id' && key !== 'deleted_at' ? (
+                    {Object.keys(tableBody[0]).map((key) => (key !== 'id' && key !== 'deleted_at' && key !== 'event_id' ? (
                       <th
                         scope="row"
-                        className="py-4 px-6 font-bold text-gray-900 whitespace-nowrap"
+                        className="py-4 px-6 text-gray-900 whitespace-nowrap"
                       >
                         {StringHelper.replaceWithSpace(key, '_')}
                       </th>
@@ -108,17 +108,17 @@ function TableData({
                 <tbody>
                   {tableBody.map((item) => (
                     <tr className="bg-white border-b 0 hover:bg-gray-50 ">
-                      {Object.keys(item).map((key) => (key !== 'id' && key !== 'deleted_at' ? (
+                      {Object.keys(item).map((key) => (key !== 'id' && key !== 'deleted_at' && key !== 'event_id' ? (
                         <th
                           scope="row"
-                          className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap"
+                          className="py-4 px-6 font-normal text-gray-900 whitespace-nowrap"
                         >
                           {item[key]}
                         </th>
                       ) : null))}
                       {editHandler && (
                         <th>
-                          <EditButton onClick={() => editHandler(item.id)} />
+                          <EditButton onClick={() => editHandler(item)} />
                         </th>
                       )}
                     </tr>
