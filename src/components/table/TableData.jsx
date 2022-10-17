@@ -6,6 +6,7 @@ import AddButton from './AddButton';
 import EditButton from './EditButton';
 import SelectEntriesTable from './SelectEntries';
 import { selectShowLimit, selectSort } from '../../constants/selectData';
+import ErrorCard from '../ErrorCard';
 
 function TableData({
   title,
@@ -75,7 +76,7 @@ function TableData({
       </div>
       )}
       <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        {!tableBody && !isLoading && (
+        {!tableBody && !isLoading && !isError && (
           <p className="text-center w-full text-xl uppercase py-20 bg-gray-50 text-orange-400">
             No Data
           </p>
@@ -132,7 +133,7 @@ function TableData({
             )}
           </table>
         )}
-        {!isLoading && isError ? null : null}
+        {!isLoading && isError ? <ErrorCard message={isError.error} /> : null}
       </div>
     </div>
   );

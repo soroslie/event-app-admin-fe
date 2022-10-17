@@ -44,6 +44,7 @@ function DashboardUsers() {
         tableHeaders={userTableHeader}
         tableBody={!loadingUserList && !errorUserList && userList.data}
         isLoading={loadingUserList}
+        isError={errorUserList}
         searchHandler={onSearchHandler}
         searchAbleData="user email"
         onSortHandler={onSortHandler}

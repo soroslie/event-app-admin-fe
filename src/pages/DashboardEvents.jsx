@@ -23,8 +23,6 @@ function DashboardEvents() {
     search: query.search, limit: query.limit, sort: query.sort, sortBy: query.sortBy,
   });
 
-  console.log(loadingEvent);
-
   const onSortHandler = (e) => {
     if (e.target.name === 'limit') {
       setQuery({ ...query, limit: e.target.value });

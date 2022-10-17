@@ -3,6 +3,7 @@ import PrimarryButton from '../components/inputs/PrimaryButton';
 import { useGetProfileQuery } from '../store/slices/apiSlice';
 import ProfileSkeleton from '../components/skeletons/ProfileSkeleton';
 import DashBoardContent from '../components/layout/DashBoardContent';
+import ErrorCard from '../components/ErrorCard';
 
 function Profile() {
   const { data, error, isFetching: isLoading } = useGetProfileQuery();
@@ -44,6 +45,7 @@ function Profile() {
         </div>
       </div>
       )}
+      {error && !isLoading && <ErrorCard message={error.message} />}
     </DashBoardContent>
   );
 }

@@ -95,6 +95,7 @@ function DashboardMerchandise() {
           !errorMerchandise && !loadingMerchandise && merchandise.data
         }
         isLoading={loadingMerchandise}
+        isError={errorMerchandise}
         editHandler={onEditHandler}
         addHandler={onAddHandler}
         searchHandler={onSearchHandler}
