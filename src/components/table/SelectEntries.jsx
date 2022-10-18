@@ -17,7 +17,7 @@ function SelectEntriesTable({
           className="cursor-pointer capitalize bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:bg-white focus:border-orange-300 focus:outline-none w-full p-2.5 "
         >
           {data.map((item) => (
-            <option key={item.id} value={item.value}>
+            <option key={item.value} value={item.value}>
               {item.name}
             </option>
           ))}

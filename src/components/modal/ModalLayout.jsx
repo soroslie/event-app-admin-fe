@@ -10,7 +10,7 @@ function ModalLayout({ title, children }) {
       <div className="relative p-4 w-full max-w-2xl h-auto">
         <div className="relative bg-white rounded-lg shadow ">
           <div className="p-4 rounded-t border-b text-center">
-            <h3 className="text-xl font-semibold text-gray-900 ">{title}</h3>
+            <h3 className="text-xl capitalize font-semibold text-gray-900 ">{title}</h3>
           </div>
           {children}
         </div>

@@ -15,7 +15,7 @@ export const apiSlice = createApi({
       query: ({
         search, limit, sort, sortBy,
       }) => ({
-        url: `/user/list?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
+        url: `/users?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
         method: 'GET',
       }),
       providesTags: ['Users'],
@@ -30,11 +30,8 @@ export const apiSlice = createApi({
     }),
     getEvent: builder.query({
       query: (id) => ({
-        url: '/event',
-        method: 'POST',
-        body: {
-          id,
-        },
+        url: `/events/${id}`,
+        method: 'GET',
       }),
       providesTags: ['Event'],
     }),
@@ -73,21 +70,20 @@ export const apiSlice = createApi({
       query: ({
         search, limit, sort, sortBy,
       }) => ({
-        url: `/merchandise/list?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
+        url: `/event/merchandises?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
         method: 'GET',
       }),
       providesTags: ['Merchandise'],
       invalidatesTags: (result, error, arg) => (!error ? ['Merchandise'] : []),
     }),
-    postEditMerchandise: builder.mutation({
+    patchtEditMerchandise: builder.mutation({
       query: ({
         id, eventId, name, stock, price,
       }) => ({
         headers: (headers) => setPrepareHeader(headers),
-        url: '/event/merchandise',
+        url: `/event/merchandises/${id}`,
         method: 'PATCH',
         body: {
-          id,
           event_id: eventId,
           name,
           stock,
@@ -140,7 +136,7 @@ export const {
   useGetEventNameListQuery,
   useGetEventsQuery,
   useGetMerchandisesQuery,
-  usePostEditMerchandiseMutation,
+  usePatchtEditMerchandiseMutation,
   usePostCreateMerchandiseMutation,
   useGetEventQuery,
   useGetProfileQuery,

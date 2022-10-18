@@ -38,7 +38,7 @@ function DashboardUsers() {
   };
 
   return (
-    <DashBoardContent title="Manage User">
+    <DashBoardContent title="manage user">
       <TableData
         title="user"
         tableHeaders={userTableHeader}

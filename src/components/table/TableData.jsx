@@ -71,7 +71,9 @@ function TableData({
         <div className="flex flex-row align-middle items-center content-center">
           <div className="mr-2">Sort By</div>
           <SelectEntriesTable data={sortByData} onChange={onSortHandler} name="sortBy" />
-          <SelectEntriesTable data={selectSort} onChange={onSortHandler} name="sort" />
+          <div className="ml-2">
+            <SelectEntriesTable data={selectSort} onChange={onSortHandler} name="sort" />
+          </div>
         </div>
       </div>
       )}

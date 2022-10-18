@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetEventsQuery } from '../store/slices/apiSlice';
 import { eventTableHeader } from '../constants/tableHeader';
@@ -44,11 +44,11 @@ function DashboardEvents() {
   };
 
   const onAddHandler = () => {
-    navigate('/event');
+    navigate('/event/create');
   };
 
   return (
-    <DashBoardContent title="Manage Event">
+    <DashBoardContent title="manage event">
       <TableData
         title="event"
         tableHeaders={eventTableHeader}

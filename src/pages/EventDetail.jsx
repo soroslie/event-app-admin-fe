@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetEventCategoriesQuery,
   useGetEventQuery,
@@ -13,13 +12,17 @@ import PrimarryButton from '../components/inputs/PrimaryButton';
 import StringHelper from '../helper/stringHelper';
 import { merchandiseTableHeader } from '../constants/tableHeader';
 import TableData from '../components/table/TableData';
+import DashBoardContent from '../components/layout/DashBoardContent';
+import ErrorCard from '../components/ErrorCard';
 
 function EventDetail() {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const {
     data: eventData,
     error: eventError,
-    isLoading: eventIsLoading,
+    isFetching: eventIsLoading,
   } = useGetEventQuery(Number(id));
 
   const [input, setInput] = useState({
@@ -34,13 +37,19 @@ function EventDetail() {
   });
 
   useEffect(() => {
+    if (eventError && !eventIsLoading) {
+      if (eventError.data.code === 404) {
+        navigate('/notfound');
+      }
+    }
     if (eventData && !eventError && !eventIsLoading) {
       const newData = eventData.data;
+
       setInput({
         eventName: newData.name,
         eventDescription: newData.description,
-        eventStatus: newData.status,
-        eventCategory: newData.category,
+        eventStatus: newData.status_id,
+        eventCategory: newData.category_id,
         eventTicketPrice: newData.ticket_price,
         eventDuration: newData.duration,
         eventCapacity: newData.capacity,
@@ -68,17 +77,14 @@ function EventDetail() {
     e.preventDefault();
   };
 
-  const addMerchandise = () => {
-
-  };
-
-  const editMerchandise = () => {
-
-  };
+  if (!eventIsLoading && !eventStatusIsLoading && !eventCategoryIsLoading) {
+    if (eventStatusError || eventCategoryError || eventError) {
+      return <ErrorCard message="oop something went wrong" />;
+    }
+  }
 
   return (
-    <>
-      <PageHeader title="Event Edit" />
+    <DashBoardContent title="event edit">
       <form className="p-4 bg-white shadow-xl mt-2 max-w-2xl mx-auto">
         <Input
           name="eventName"
@@ -99,31 +105,31 @@ function EventDetail() {
           onChange={handleChange}
         />
 
-        {eventStatusIsLoading ? (
-          <div className="animate-pulse rounded-xl my-3 bg-slate-200 h-10 w-full mx-auto shadow-2xl flex items-center justify-center" />
-        ) : (
+        {!eventStatusIsLoading && !eventIsLoading && !eventStatusError && !eventError ? (
           <Select
             title="status"
             name="eventStatus"
             value={input.eventStatus}
             data={eventStatus.data}
-            defaultValue="1"
+            defaultValue={input.eventStatus ? input.eventStatus : '1'}
             isLoading={eventCategoryIsLoading}
             onChange={handleChange}
           />
-        )}
-        {eventCategoryIsLoading ? (
-          <div className="animate-pulse rounded-xl my-3 bg-slate-200 h-10 w-full mx-auto shadow-2xl flex items-center justify-center" />
         ) : (
+          <div className="animate-pulse rounded-xl my-3 bg-slate-200 h-10 w-full mx-auto shadow-2xl flex items-center justify-center" />
+        )}
+        {!eventCategoryIsLoading && !eventIsLoading && !eventCategoryError && !eventError ? (
           <Select
             title="category"
             name="eventCategory"
             value={input.eventCategory}
             data={eventCategory.data}
-            defaultValue="1"
+            defaultValue={input.eventCategory ? input.eventCategory : '1'}
             isLoading={eventCategoryIsLoading}
             onChange={handleChange}
           />
+        ) : (
+          <div className="animate-pulse rounded-xl my-3 bg-slate-200 h-10 w-full mx-auto shadow-2xl flex items-center justify-center" />
         )}
         <Input
           name="eventTicketPrice"
@@ -161,7 +167,7 @@ function EventDetail() {
         tableBody={!eventIsLoading && !eventError && eventData.data.merchandises}
         isLoading={eventIsLoading}
       />
-    </>
+    </DashBoardContent>
   );
 }
 

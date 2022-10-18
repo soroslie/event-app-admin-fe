@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DashBoardContent from '../components/layout/DashBoardContent';
-import MerchandiseModal from '../components/modal/merchandiseModal';
+import MerchandiseModal from '../components/modal/MerchandiseModal';
 import TableData from '../components/table/TableData';
 import { selectMerchandiseSortBy } from '../constants/selectData';
 import { merchandiseTableHeader } from '../constants/tableHeader';
@@ -29,12 +29,26 @@ function DashboardMerchandise() {
     data: {
       id: '',
       event_name: '',
-      event_id: '',
+      event_id: 1,
       name: '',
       price: 0,
       stock: 0,
     },
   });
+
+  const resetModal = () => {
+    setModalData({
+      show: false,
+      data: {
+        id: '',
+        event_name: '',
+        event_id: 1,
+        name: '',
+        price: 0,
+        stock: 0,
+      },
+    });
+  };
 
   const onSortHandler = (e) => {
     if (e.target.name === 'limit') {
@@ -79,13 +93,14 @@ function DashboardMerchandise() {
   };
 
   return (
-    <DashBoardContent title="Manage Merchandise">
+    <DashBoardContent title="manage merchandise">
       {modalData.show && (
       <MerchandiseModal
         onCloseModal={onCloseModal}
         show={modalData.show}
         data={modalData.data}
         handleInputChange={handleInputChange}
+        handleResetModal={resetModal}
       />
       )}
       <TableData
