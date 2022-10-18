@@ -11,7 +11,7 @@ export default function Sidebar() {
     navigate('/login');
   };
   return (
-    <div className="h-full fixed overflow-y-auto flex-row flex-nowrap overflow-hidden shadow-xl bg-white w-40 md:w-64 z-10 py-4 px-6">
+    <div className="h-full fixed overflow-y-auto flex-row flex-nowrap overflow-hidden shadow-xl bg-white w-40 md:w-64 z-10 py-4 md:px-6 px-3">
       <div className="flex-col items-stretch min-h-full flex-nowrap px-0 relative">
         <h5 className="text-center">Event App Dashboard</h5>
         <div className="flex flex-col">

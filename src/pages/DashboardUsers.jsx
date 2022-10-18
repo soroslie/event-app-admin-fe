@@ -34,7 +34,11 @@ function DashboardUsers() {
   };
 
   const onSearchHandler = (e) => {
-    setQuery({ ...query, search: e.target.value });
+    const delayDebounceFn = setTimeout(() => {
+      setQuery({ ...query, search: e.target.value });
+    }, 3000);
+
+    return () => clearTimeout(delayDebounceFn);
   };
 
   return (
