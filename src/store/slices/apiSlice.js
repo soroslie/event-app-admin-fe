@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import APIConstatnt from '../../constants/api';
-import setPrepareHeader from '../../helper/apiHeader';
+import setPrepareHeader, { setPrepareHeaderFormData } from '../../helper/apiHeader';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -47,14 +47,14 @@ export const apiSlice = createApi({
     }),
     getEventStatus: builder.query({
       query: () => ({
-        url: '/event/status_list',
+        url: '/event/status-list',
         method: 'GET',
       }),
       providesTags: ['Event'],
     }),
     getEventCategories: builder.query({
       query: () => ({
-        url: '/event/category_list',
+        url: '/event/category-list',
         method: 'GET',
       }),
       providesTags: ['Event'],
@@ -120,7 +120,17 @@ export const apiSlice = createApi({
           password,
         },
       }),
-      // invalidatesTags: (result, error, arg) => (!error ? ['Auth'] : []),
+    }),
+    postCreateEvent: builder.mutation({
+      query: (formData) => ({
+        headers: {
+          Accept: 'application/json',
+          // 'Content-Type': 'multipart/form-data',
+        },
+        url: '/event',
+        method: 'POST',
+        body: formData,
+      }),
     }),
     // invalidateBooks: builder.mutation({
     //   invalidatesTags: ['Auth'],
@@ -140,4 +150,6 @@ export const {
   usePostCreateMerchandiseMutation,
   useGetEventQuery,
   useGetProfileQuery,
+
+  usePostCreateEventMutation,
 } = apiSlice;

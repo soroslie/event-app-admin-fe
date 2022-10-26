@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import DashBoardContent from '../components/layout/DashBoardContent';
-import { useGetEventCategoriesQuery, useGetEventStatusQuery } from '../store/slices/apiSlice';
+import { useGetEventCategoriesQuery, useGetEventStatusQuery, usePostCreateEventMutation } from '../store/slices/apiSlice';
 import Input from '../components/inputs/Input';
 import TextArea from '../components/inputs/TextArea';
 import Select from '../components/inputs/Select';
 import PrimarryButton from '../components/inputs/PrimaryButton';
 import StringHelper from '../helper/stringHelper';
-import ErrorCard from '../components/ErrorCard';
 import FileUpload from '../components/inputs/FileUpload';
 
 function AddEvent() {
@@ -21,6 +20,8 @@ function AddEvent() {
     isFetching: eventCategoryIsLoading,
   } = useGetEventCategoriesQuery();
 
+  const [createEvent] = usePostCreateEventMutation();
+
   const [input, setInput] = useState({
     eventName: '',
     eventDescription: '',
@@ -30,20 +31,44 @@ function AddEvent() {
     eventDuration: '',
     eventCapacity: '',
     eventStartTime: '',
+    eventPicture: [],
   });
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
+  const handleFile = (file) => {
+    setInput({ ...input, eventPicture: file });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(input);
+
+    // eslint-disable-next-line prefer-const
+    let formData = new FormData();
+    formData.append('category_id', parseInt(input.eventCategory, 10));
+    formData.append('status_id', parseInt(input.eventStatus, 10));
+    formData.append('name', input.eventName);
+    formData.append('picture', input.eventPicture);
+    formData.append('description', input.eventDescription);
+    formData.append('start_time', input.eventStartTime);
+    formData.append('duration', parseInt(input.eventDuration, 10));
+    formData.append('ticket_price', parseInt(input.eventTicketPrice, 10));
+    formData.append('max_capacity', parseInt(input.eventCapacity, 10));
+    createEvent(formData).unwrap()
+      .then((data) => {
+      })
+      .catch((error) => {
+
+      });
   };
 
   return (
     <DashBoardContent title="add event">
       <form className="p-4 bg-white shadow-xl mt-2 max-w-2xl mx-auto">
-        <FileUpload />
+        <FileUpload onUponUploadFile={handleFile} />
         <Input
           name="eventName"
           title="Name"
@@ -99,8 +124,16 @@ function AddEvent() {
           name="eventCapacity"
           title="capacity"
           type="number"
-          placholder="90"
+          placholder="100"
           value={input.eventCapacity}
+          onChange={handleChange}
+        />
+        <Input
+          name="eventDuration"
+          title="duration"
+          type="number"
+          placholder="90"
+          value={input.eventDuration}
           onChange={handleChange}
         />
         <Input

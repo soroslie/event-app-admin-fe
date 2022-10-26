@@ -13,7 +13,6 @@ root.render(
       <App />
     </React.StrictMode>
   </Provider>,
-
 );
 
 reportWebVitals();

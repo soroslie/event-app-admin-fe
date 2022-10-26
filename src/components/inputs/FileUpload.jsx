@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/styles/components/imageUpload.css';
 
-function FileUpload() {
+function FileUpload({ onUponUploadFile }) {
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const handleFile = (file) => {
@@ -26,12 +26,14 @@ function FileUpload() {
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       setPreviewUrl(URL.createObjectURL(e.target.files[0]));
+      onUponUploadFile(e.target.files[0]);
     }
   };
 
   const removeSelectedImage = () => {
     setPreviewUrl();
   };
+
   return (
     <div className="my-1">
       <label htmlFor="fileUpload" className="block mb-2 text-md font-medium text-gray-900">

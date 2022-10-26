@@ -17,8 +17,8 @@ function Login() {
   });
 
   const [inputError, setInputError] = useState({
-    emailError: '',
-    passwordError: '',
+    email: '',
+    password: '',
     formError: '',
   });
 
@@ -31,21 +31,21 @@ function Login() {
 
     setInputError({
       ...inputError,
-      emailError: '',
-      passwordError: '',
+      email: '',
+      password: '',
       formError: '',
     });
 
     if (!input.email) {
       return setInputError({
         ...inputError,
-        emailError: 'Please fill the email field',
+        email: 'Please fill the email field',
       });
     }
     if (!input.password) {
       return setInputError({
         ...inputError,
-        passwordError: 'Please fill the password field',
+        password: 'Please fill the password field',
       });
     }
 
@@ -61,10 +61,10 @@ function Login() {
         navigate('/');
       })
       .catch((error) => {
-        if (error.data.error_message) {
+        if (error.data.message) {
           setInputError({
             ...inputError,
-            formError: error.data.error_message,
+            formError: error.data.message,
           });
         } else {
           setInputError({
@@ -77,8 +77,8 @@ function Login() {
 
     return setInputError({
       ...inputError,
-      emailError: '',
-      passwordError: '',
+      email: '',
+      password: '',
       formError: '',
     });
   };
@@ -94,8 +94,8 @@ function Login() {
             Event App Admin
           </h1>
           <form className="space-y-4 md:space-y-6" onSubmit={onHandleLogin}>
-            <InputAuth placeholder="Email" type="text" onChange={handleChange} name="email" error={inputError.emailError} value={input.email} />
-            <InputAuth placeholder="Pasword" type="password" onChange={handleChange} name="password" error={inputError.passwordError} value={input.password} />
+            <InputAuth placeholder="Email" type="text" onChange={handleChange} name="email" error={inputError.email} value={input.email} />
+            <InputAuth placeholder="Pasword" type="password" onChange={handleChange} name="password" error={inputError.password} value={input.password} />
             <div className="my-3" />
             <p className={`${inputError.formError ? 'visible' : 'invisible'} text-center mt-1 text-red-500`}>{!inputError.formError ? '-' : inputError.formError}</p>
 
