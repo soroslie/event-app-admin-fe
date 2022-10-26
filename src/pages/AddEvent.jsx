@@ -7,6 +7,7 @@ import Select from '../components/inputs/Select';
 import PrimarryButton from '../components/inputs/PrimaryButton';
 import StringHelper from '../helper/stringHelper';
 import FileUpload from '../components/inputs/FileUpload';
+import ErrorCard from '../components/ErrorCard';
 
 function AddEvent() {
   const {
@@ -44,7 +45,6 @@ function AddEvent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
 
     // eslint-disable-next-line prefer-const
     let formData = new FormData();
@@ -59,11 +59,16 @@ function AddEvent() {
     formData.append('max_capacity', parseInt(input.eventCapacity, 10));
     createEvent(formData).unwrap()
       .then((data) => {
+
       })
       .catch((error) => {
 
       });
   };
+
+  if (eventStatusError || eventCategoryError) {
+    return <ErrorCard message="oop something went wrong" />;
+  }
 
   return (
     <DashBoardContent title="add event">

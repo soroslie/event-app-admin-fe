@@ -108,6 +108,7 @@ function TableData({
                       && key !== 'deleted_at'
                       && key !== 'event_id' ? (
                         <th
+                          key={key}
                           scope="row"
                           className="py-4 px-6 text-gray-900 whitespace-nowrap"
                         >
@@ -135,6 +136,7 @@ function TableData({
                       {Object.keys(item).map((key) => (
                         key === 'start_time' ? (
                           <th
+                            key={key}
                             scope="row"
                             className="py-4 px-6 font-normal text-gray-900 whitespace-nowrap"
                           >
@@ -145,6 +147,7 @@ function TableData({
                         && key !== 'deleted_at'
                         && key !== 'event_id' ? (
                           <th
+                            key={key}
                             scope="row"
                             className="py-4 px-6 font-normal text-gray-900 whitespace-nowrap"
                           >

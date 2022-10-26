@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../assets/styles/components/imageUpload.css';
 
-function FileUpload({ onUponUploadFile }) {
+function FileUpload({ onUponUploadFile, imageSrc }) {
   const [image, setImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewUrl, setPreviewUrl] = useState(imageSrc);
+
   const handleFile = (file) => {
-    // you can carry out any file validations here...
     setImage(file);
     setPreviewUrl(URL.createObjectURL(file));
   };
@@ -54,7 +54,7 @@ function FileUpload({ onUponUploadFile }) {
             { !previewUrl && <p className="text-sm">drag and drop image here....</p>}
             { previewUrl && (
             <div className="image">
-              <img src={previewUrl} alt="abc" />
+              <img src={previewUrl} alt="image_edit" />
             </div>
             ) }
           </div>

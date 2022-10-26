@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import APIConstatnt from '../../constants/api';
-import setPrepareHeader, { setPrepareHeaderFormData } from '../../helper/apiHeader';
+import setPrepareHeader from '../../helper/apiHeader';
 
 export const apiSlice = createApi({
   reducerPath: 'api',
@@ -16,7 +16,7 @@ export const apiSlice = createApi({
         search, limit, sort, sortBy,
       }) => ({
         url: `/users?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Users'],
       invalidatesTags: (result, error, arg) => (!error ? ['Users'] : []),
@@ -24,14 +24,14 @@ export const apiSlice = createApi({
     getProfile: builder.query({
       query: () => ({
         url: '/user/profile',
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Profile'],
     }),
     getEvent: builder.query({
       query: (id) => ({
         url: `/events/${id}`,
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Event'],
     }),
@@ -40,7 +40,7 @@ export const apiSlice = createApi({
         search, limit, sort, sortBy,
       }) => ({
         url: `/events?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Event'],
       invalidatesTags: (result, error, arg) => (!error ? ['Event'] : []),
@@ -48,21 +48,21 @@ export const apiSlice = createApi({
     getEventStatus: builder.query({
       query: () => ({
         url: '/event/status-list',
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Event'],
     }),
     getEventCategories: builder.query({
       query: () => ({
         url: '/event/category-list',
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Event'],
     }),
     getEventNameList: builder.query({
       query: () => ({
         url: '/event/event_and_id_list',
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Event'],
     }),
@@ -71,7 +71,7 @@ export const apiSlice = createApi({
         search, limit, sort, sortBy,
       }) => ({
         url: `/event/merchandises?search=${search}&limit=${limit}&sortBy=${sortBy}&sort=${sort}`,
-        method: 'GET',
+        method: APIConstatnt.METHOD.get,
       }),
       providesTags: ['Merchandise'],
       invalidatesTags: (result, error, arg) => (!error ? ['Merchandise'] : []),
@@ -82,7 +82,7 @@ export const apiSlice = createApi({
       }) => ({
         headers: (headers) => setPrepareHeader(headers),
         url: `/event/merchandises/${id}`,
-        method: 'PATCH',
+        method: APIConstatnt.METHOD.patch,
         body: {
           event_id: eventId,
           name,
@@ -99,7 +99,7 @@ export const apiSlice = createApi({
       }) => ({
         headers: (headers) => setPrepareHeader(headers),
         url: '/event/merchandise',
-        method: 'POST',
+        method: APIConstatnt.METHOD.post,
         body: {
           event_id: eventId,
           name,
@@ -114,7 +114,7 @@ export const apiSlice = createApi({
       query: ({ email, password }) => ({
         headers: (headers) => setPrepareHeader(headers),
         url: '/auth/login',
-        method: 'POST',
+        method: APIConstatnt.METHOD.post,
         body: {
           email,
           password,
@@ -125,12 +125,25 @@ export const apiSlice = createApi({
       query: (formData) => ({
         headers: {
           Accept: 'application/json',
-          // 'Content-Type': 'multipart/form-data',
         },
         url: '/event',
-        method: 'POST',
+        method: APIConstatnt.METHOD.post,
         body: formData,
       }),
+      providesTags: ['Event'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Event'] : []),
+    }),
+    patchEditEvent: builder.mutation({
+      query: ({ formData, id }) => ({
+        headers: {
+          Accept: 'application/json',
+        },
+        url: `/events/${id}`,
+        method: APIConstatnt.METHOD.patch,
+        body: formData,
+      }),
+      providesTags: ['Event'],
+      invalidatesTags: (result, error, arg) => (!error ? ['Event'] : []),
     }),
     // invalidateBooks: builder.mutation({
     //   invalidatesTags: ['Auth'],
@@ -152,4 +165,5 @@ export const {
   useGetProfileQuery,
 
   usePostCreateEventMutation,
+  usePatchEditEventMutation,
 } = apiSlice;

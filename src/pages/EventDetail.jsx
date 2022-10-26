@@ -4,6 +4,7 @@ import {
   useGetEventCategoriesQuery,
   useGetEventQuery,
   useGetEventStatusQuery,
+  usePatchEditEventMutation,
 } from '../store/slices/apiSlice';
 import Input from '../components/inputs/Input';
 import TextArea from '../components/inputs/TextArea';
@@ -14,18 +15,19 @@ import { merchandiseTableHeader } from '../constants/tableHeader';
 import TableData from '../components/table/TableData';
 import DashBoardContent from '../components/layout/DashBoardContent';
 import ErrorCard from '../components/ErrorCard';
+import FileUpload from '../components/inputs/FileUpload';
 
 function EventDetail() {
   const navigate = useNavigate();
-
+  const [editEvent] = usePatchEditEventMutation();
   const { id } = useParams();
   const {
     data: eventData,
     error: eventError,
     isFetching: eventIsLoading,
   } = useGetEventQuery(Number(id));
-
   const [input, setInput] = useState({
+    eventId: '',
     eventName: '',
     eventDescription: '',
     eventStatus: '1',
@@ -34,6 +36,7 @@ function EventDetail() {
     eventDuration: '',
     eventCapacity: '',
     eventStartTime: '',
+    eventPicture: [],
   });
 
   useEffect(() => {
@@ -44,8 +47,8 @@ function EventDetail() {
     }
     if (eventData && !eventError && !eventIsLoading) {
       const newData = eventData.data;
-
       setInput({
+        eventId: id,
         eventName: newData.name,
         eventDescription: newData.description,
         eventStatus: newData.status_id,
@@ -53,6 +56,7 @@ function EventDetail() {
         eventTicketPrice: newData.ticket_price,
         eventDuration: newData.duration,
         eventCapacity: newData.capacity,
+        eventPicture: newData.picture,
         eventStartTime: StringHelper.dateTimeForInput(newData.start_time),
       });
     }
@@ -60,6 +64,10 @@ function EventDetail() {
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleFile = (file) => {
+    setInput({ ...input, eventPicture: file });
   };
 
   const {
@@ -75,6 +83,26 @@ function EventDetail() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // eslint-disable-next-line prefer-const
+    let formData = new FormData();
+    formData.append('category_id', parseInt(input.eventCategory, 10));
+    formData.append('status_id', parseInt(input.eventStatus, 10));
+    formData.append('name', input.eventName);
+    if (typeof input.eventPicture !== 'string') {
+      formData.append('picture', input.eventPicture);
+    }
+    formData.append('description', input.eventDescription);
+    formData.append('start_time', input.eventStartTime);
+    formData.append('duration', parseInt(input.eventDuration, 10));
+    formData.append('ticket_price', parseInt(input.eventTicketPrice, 10));
+    formData.append('max_capacity', parseInt(input.eventCapacity, 10));
+    editEvent({ formData, id: input.eventId }).unwrap()
+      .then((data) => {
+
+      })
+      .catch((error) => {
+
+      });
   };
 
   if (!eventIsLoading && !eventStatusIsLoading && !eventCategoryIsLoading) {
@@ -86,6 +114,7 @@ function EventDetail() {
   return (
     <DashBoardContent title="event edit">
       <form className="p-4 bg-white shadow-xl mt-2 max-w-2xl mx-auto">
+        <FileUpload onUponUploadFile={handleFile} imageSrc={input.eventPicture} />
         <Input
           name="eventName"
           title="Name"
@@ -147,6 +176,14 @@ function EventDetail() {
           placholder="90"
           value={input.eventCapacity}
           isLoading={eventIsLoading}
+          onChange={handleChange}
+        />
+        <Input
+          name="eventDuration"
+          title="duration"
+          type="number"
+          placholder="90"
+          value={input.eventDuration}
           onChange={handleChange}
         />
         <Input
