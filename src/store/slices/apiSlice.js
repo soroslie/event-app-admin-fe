@@ -113,7 +113,7 @@ export const apiSlice = createApi({
     authLogin: builder.mutation({
       query: ({ email, password }) => ({
         headers: (headers) => setPrepareHeader(headers),
-        url: '/auth/login',
+        url: '/auth/admin-login',
         method: APIConstatnt.METHOD.post,
         body: {
           email,

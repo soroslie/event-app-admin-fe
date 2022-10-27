@@ -2,12 +2,12 @@
 import React from 'react';
 import moment from 'moment';
 import StringHelper from '../../helper/stringHelper';
-import TableSkeleton from '../skeletons/TableSkeleton';
 import AddButton from './AddButton';
 import EditButton from './EditButton';
 import SelectEntriesTable from './SelectEntries';
 import { selectShowLimit, selectSort } from '../../constants/selectData';
 import ErrorCard from '../ErrorCard';
+import TableSkeleton from '../skeletons/TableSkeleton';
 
 function TableData({
   title,
@@ -132,7 +132,7 @@ function TableData({
                 </thead>
                 <tbody>
                   {tableBody.map((item) => (
-                    <tr className="bg-white border-b 0 hover:bg-gray-50">
+                    <tr key={item.id} className="bg-white border-b 0 hover:bg-gray-50">
                       {Object.keys(item).map((key) => (
                         key === 'start_time' ? (
                           <th

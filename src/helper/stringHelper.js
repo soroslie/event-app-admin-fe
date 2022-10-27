@@ -10,7 +10,7 @@ class StringHelper {
   }
 
   static replaceWithSpace(words, pattern) {
-    return words.replace(pattern, ' ');
+    return words.replaceAll(pattern, ' ');
   }
 }
 

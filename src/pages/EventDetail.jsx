@@ -55,7 +55,7 @@ function EventDetail() {
         eventCategory: newData.category_id,
         eventTicketPrice: newData.ticket_price,
         eventDuration: newData.duration,
-        eventCapacity: newData.capacity,
+        eventCapacity: newData.max_capacity,
         eventPicture: newData.picture,
         eventStartTime: StringHelper.dateTimeForInput(newData.start_time),
       });
@@ -202,6 +202,12 @@ function EventDetail() {
         title="merchandise"
         tableHeaders={merchandiseTableHeader}
         tableBody={!eventIsLoading && !eventError && eventData.data.merchandises}
+        isLoading={eventIsLoading}
+      />
+      <TableData
+        title="participants"
+        tableHeaders={merchandiseTableHeader}
+        tableBody={!eventIsLoading && !eventError && eventData.data.event_participant}
         isLoading={eventIsLoading}
       />
     </DashBoardContent>
