@@ -77,7 +77,6 @@ function MerchandiseModal({
         .unwrap()
         .then(() => {})
         .catch((error) => {
-          console.log(error);
           // show error modal
           setErrorModal({ error: 'error', show: true });
         })
@@ -86,8 +85,6 @@ function MerchandiseModal({
           handleResetModal();
         });
     }
-
-    console.log(data.event_id);
   };
 
   const onCloseErrorModal = () => {
